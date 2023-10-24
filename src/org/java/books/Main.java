@@ -1,5 +1,7 @@
 package org.java.books;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -34,8 +36,38 @@ public class Main {
                 System.out.println("Inserisci l'editore del libro");
                 String editor = scanner.nextLine();
                 ArrayBook[i] = new Book(title, pages, author, editor);
-                System.out.println(ArrayBook[i]);
+
             }
+
+//            Inizio fileWriter
+            FileWriter fileWriter = null;
+            try {
+                fileWriter = new FileWriter("./resources/data.txt");
+                for (int i = 0; i < ArrayBook.length ; i++) {
+                    System.out.println(ArrayBook[i]);
+                    fileWriter.write(ArrayBook[i].getTitle());
+
+                }
+
+
+            }
+
+            catch (IOException e) {
+                System.out.println("unable to write file");
+            }
+            finally {
+                // sia che ho terminato il try, sia che sono entrato nel catch passo di qui
+                try {
+                    if (fileWriter != null) {
+                        System.out.println("Chiudo il file");
+                        fileWriter.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+//             fine writer
+
         } catch (NumberFormatException e) {
             System.out.println("Numero non valido");
         } catch (IllegalArgumentException e) {
